@@ -9,22 +9,78 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --bg: #0a0a0a;
+            --card-bg: rgba(20,20,20,0.9);
+            --text: #e0e0e0;
+            --text-muted: #999;
+            --text-dim: #777;
+            --text-hint: #555;
+            --accent: #ffa726;
+            --accent-bg: rgba(255,167,38,0.05);
+            --accent-bg2: rgba(255,167,38,0.1);
+            --accent-border: rgba(255,167,38,0.2);
+            --accent-glow: rgba(255,167,38,0.15);
+            --border: rgba(255,255,255,0.15);
+            --quote-bg: rgba(255,167,38,0.03);
+            --quote-border: rgba(255,167,38,0.4);
+        }
+
+        body.light {
+            --bg: #f5f3f0;
+            --card-bg: rgba(255,255,255,0.95);
+            --text: #222;
+            --text-muted: #666;
+            --text-dim: #888;
+            --text-hint: #aaa;
+            --accent: #e67e00;
+            --accent-bg: rgba(230,126,0,0.05);
+            --accent-bg2: rgba(230,126,0,0.1);
+            --accent-border: rgba(230,126,0,0.25);
+            --accent-glow: rgba(230,126,0,0.1);
+            --border: rgba(0,0,0,0.12);
+            --quote-bg: rgba(230,126,0,0.04);
+            --quote-border: rgba(230,126,0,0.4);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* Toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 16px; right: 16px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-border);
+            background: var(--card-bg);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            transform: scale(1.1);
         }
 
         .bg-glow {
             position: fixed;
             width: 300px; height: 300px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,167,38,0.15), transparent 70%);
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
             top: 50%; left: 50%;
             transform: translate(-50%,-50%);
             pointer-events: none;
@@ -38,15 +94,16 @@
 
         .card {
             position: relative;
-            background: rgba(20,20,20,0.9);
-            border: 1px solid rgba(255,167,38,0.2);
+            background: var(--card-bg);
+            border: 1px solid var(--accent-border);
             border-radius: 20px;
             padding: 40px 30px;
             max-width: 420px;
             width: 100%;
             text-align: center;
             backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(255,167,38,0.05);
+            box-shadow: 0 0 60px var(--accent-bg);
+            transition: background 0.4s, border-color 0.4s;
         }
 
         .photo {
@@ -60,7 +117,7 @@
 
         .name {
             font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px;
-            border-right: 2px solid #ffa726;
+            border-right: 2px solid var(--accent);
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
@@ -78,57 +135,57 @@
         }
 
         .role {
-            font-size: 11px; font-weight: 600; color: #ffa726;
+            font-size: 11px; font-weight: 600; color: var(--accent);
             letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
         }
 
         .bio {
-            font-size: 14px; font-weight: 300; color: #999;
+            font-size: 14px; font-weight: 300; color: var(--text-muted);
             font-style: italic; line-height: 1.6; margin-bottom: 20px; padding: 0 10px;
         }
 
         .divider {
             width: 40px; height: 2px;
-            background: rgba(255,167,38,0.4);
+            background: var(--quote-border);
             margin: 0 auto 20px; border-radius: 2px;
         }
 
-        .location { font-size: 12px; color: #777; margin-bottom: 20px; }
+        .location { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; }
         .location::before { content: '📍 '; }
 
         /* Accordion */
         .accordion { text-align: left; margin-bottom: 20px; }
 
         .acc-item {
-            border: 1px solid rgba(255,167,38,0.15);
+            border: 1px solid var(--accent-border);
             border-radius: 12px;
             margin-bottom: 8px;
             overflow: hidden;
             transition: border-color 0.3s;
         }
 
-        .acc-item:hover { border-color: rgba(255,167,38,0.4); }
+        .acc-item:hover { border-color: var(--accent); }
 
         .acc-header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 16px;
             cursor: pointer;
-            background: rgba(255,167,38,0.05);
+            background: var(--accent-bg);
             user-select: none;
             transition: background 0.3s;
         }
 
-        .acc-header:hover { background: rgba(255,167,38,0.1); }
+        .acc-header:hover { background: var(--accent-bg2); }
 
         .acc-header .icon { font-size: 16px; margin-right: 10px; }
 
         .acc-header .label {
             flex: 1; font-size: 13px; font-weight: 600;
-            color: #ddd; letter-spacing: 0.5px;
+            color: var(--text); letter-spacing: 0.5px;
         }
 
         .acc-header .arrow {
-            font-size: 12px; color: #ffa726;
+            font-size: 12px; color: var(--accent);
             transition: transform 0.3s;
         }
 
@@ -146,16 +203,16 @@
         }
 
         .acc-body p {
-            font-size: 13px; color: #aaa;
+            font-size: 13px; color: var(--text-muted);
             line-height: 1.7; margin-bottom: 6px;
         }
 
         .acc-body .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
 
         .tag {
-            background: rgba(255,167,38,0.1);
-            border: 1px solid rgba(255,167,38,0.2);
-            color: #ffa726;
+            background: var(--accent-bg2);
+            border: 1px solid var(--accent-border);
+            color: var(--accent);
             padding: 4px 12px; border-radius: 16px;
             font-size: 11px; font-weight: 600;
         }
@@ -164,8 +221,8 @@
         .quotes-box {
             margin-bottom: 20px;
             padding: 16px 20px;
-            border-left: 3px solid rgba(255,167,38,0.4);
-            background: rgba(255,167,38,0.03);
+            border-left: 3px solid var(--quote-border);
+            background: var(--quote-bg);
             border-radius: 0 12px 12px 0;
             min-height: 70px;
             display: flex;
@@ -175,12 +232,12 @@
             transition: background 0.3s;
         }
 
-        .quotes-box:hover { background: rgba(255,167,38,0.06); }
+        .quotes-box:hover { background: var(--accent-bg); }
 
         .quote-text {
             font-size: 13px;
             font-style: italic;
-            color: #ccc;
+            color: var(--text);
             line-height: 1.7;
             opacity: 1;
             transition: opacity 0.5s ease;
@@ -190,7 +247,7 @@
 
         .quote-author {
             font-size: 11px;
-            color: #ffa726;
+            color: var(--accent);
             margin-top: 8px;
             font-weight: 600;
             opacity: 1;
@@ -201,28 +258,29 @@
 
         .quote-hint {
             font-size: 10px;
-            color: #555;
+            color: var(--text-hint);
             text-align: center;
             margin-top: 4px;
         }
 
         .instagram {
             display: inline-flex; align-items: center; gap: 8px;
-            color: #e0e0e0; text-decoration: none;
+            color: var(--text); text-decoration: none;
             font-size: 13px; padding: 10px 24px;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid var(--border);
             border-radius: 30px; transition: all 0.3s;
         }
 
         .instagram:hover {
-            border-color: #ffa726; color: #ffa726;
-            box-shadow: 0 0 20px rgba(255,167,38,0.15);
+            border-color: var(--accent); color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
         .instagram svg { width: 16px; height: 16px; fill: currentColor; }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
     <div class="bg-glow"></div>
 
     <div class="card">
@@ -306,6 +364,19 @@
     </div>
 
     <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+            const btn = document.getElementById('themeBtn');
+            btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+
         function toggle(header) {
             const item = header.parentElement;
             item.classList.toggle('open');
